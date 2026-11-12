@@ -1,0 +1,20 @@
+[Unit]
+Description=JarvisCAN logger OBD-II a SQLite
+Documentation=file:///home/arduino/JarvisCAN/README.md
+After=network.target
+
+[Service]
+Type=simple
+User=arduino
+Group=arduino
+WorkingDirectory=/home/arduino/JarvisCAN
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/home/arduino/JarvisCAN/bin/can_logger --db /home/arduino/JarvisCAN/data/vehicle.db --iface can0 --interval 60
+Restart=always
+RestartSec=10
+TimeoutStopSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

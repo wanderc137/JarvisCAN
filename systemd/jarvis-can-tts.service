@@ -1,0 +1,22 @@
+[Unit]
+Description=JarvisCAN panel web de alertas y audio (TTS) :8090
+Documentation=file:///home/arduino/JarvisCAN/docs/VOICE-HUMAN-LITE.md
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=arduino
+Group=arduino
+WorkingDirectory=/home/arduino/JarvisCAN
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/bin/bash /home/arduino/JarvisCAN/scripts/run-service-tts.sh
+ExecStopPost=/bin/rm -f /home/arduino/JarvisCAN/data/tts-server.pid
+Restart=always
+RestartSec=5
+TimeoutStopSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

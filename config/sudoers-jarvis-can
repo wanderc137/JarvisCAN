@@ -1,0 +1,3 @@
+arduino ALL=(root) NOPASSWD: /usr/bin/systemctl start jarvis-can-logger
+arduino ALL=(root) NOPASSWD: /usr/bin/systemctl stop jarvis-can-logger
+arduino ALL=(root) NOPASSWD: /usr/bin/systemctl restart jarvis-can-logger

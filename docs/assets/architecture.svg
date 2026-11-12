@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="820" viewBox="0 0 1280 820" role="img" aria-labelledby="title desc">
+  <title id="title">Arquitectura extremo a extremo de JarvisCAN</title>
+  <desc id="desc">Flujo desde la ECU del vehículo o el simulador, pasando por la adquisición CAN, SQLite, consultas y reglas, hasta Piper TTS y el panel web.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7dd3fc"/>
+    </marker>
+    <marker id="arrowDim" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748b"/>
+    </marker>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#070b16"/>
+      <stop offset="1" stop-color="#0d1424"/>
+    </linearGradient>
+    <linearGradient id="dbGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0e7490"/>
+      <stop offset="1" stop-color="#155e75"/>
+    </linearGradient>
+    <style>
+      .title{font:700 26px system-ui,-apple-system,Segoe UI,Roboto,sans-serif;fill:#f8fafc}
+      .sub{font:400 13px system-ui,-apple-system,Segoe UI,Roboto,sans-serif;fill:#94a3b8}
+      .box{fill:#111a2e;stroke:#28405f;stroke-width:1.5}
+      .box2{fill:#0f1b31;stroke:#2b4a6f;stroke-width:1.5}
+      .lbl{font:600 14px system-ui,-apple-system,Segoe UI,Roboto,sans-serif;fill:#e2e8f0}
+      .small{font:400 12px system-ui,-apple-system,Segoe UI,Roboto,sans-serif;fill:#94a3b8}
+      .tiny{font:500 11px system-ui,-apple-system,Segoe UI,Roboto,sans-serif;fill:#64748b}
+      .cyan{font:700 12px system-ui,sans-serif;fill:#22d3ee;letter-spacing:.08em}
+      .green{fill:#34d399}.amber{fill:#fbbf24}.violet{fill:#a78bfa}.red{fill:#f87171}
+      .flow{fill:none;stroke:#7dd3fc;stroke-width:1.8;marker-end:url(#arrow)}
+      .flowdim{fill:none;stroke:#64748b;stroke-width:1.5;stroke-dasharray:6 5;marker-end:url(#arrowDim)}
+    </style>
+  </defs>
+
+  <rect width="1280" height="820" fill="url(#bg)"/>
+  <rect x="24" y="24" width="1232" height="772" rx="18" fill="none" stroke="#1e293b"/>
+
+  <text x="56" y="70" class="title">JarvisCAN · arquitectura extremo a extremo</text>
+  <text x="56" y="94" class="sub">Adquisición local, SQLite, consultas y alertas por voz — sin nube</text>
+
+  <!-- Vehicle -->
+  <rect x="56" y="140" width="220" height="120" rx="14" class="box"/>
+  <text x="76" y="168" class="cyan">VEHÍCULO</text>
+  <text x="76" y="194" class="lbl">Nissan Versa 2020</text>
+  <text x="76" y="216" class="small">ECU · bus CAN</text>
+  <text x="76" y="236" class="small">ISO 15765-4 · bus a verificar</text>
+
+  <!-- Acquisition -->
+  <rect x="330" y="140" width="210" height="120" rx="14" class="box"/>
+  <text x="350" y="168" class="cyan">ADQUISICIÓN</text>
+  <text x="350" y="194" class="lbl">obd.c</text>
+  <text x="350" y="216" class="small">SocketCAN · single-frame</text>
+  <text x="350" y="236" class="small">Petición 0x7DF → 0x7E8</text>
+
+  <rect x="330" y="300" width="210" height="112" rx="14" class="box"/>
+  <text x="350" y="328" class="lbl">can_logger (C)</text>
+  <text x="350" y="350" class="small">19 PIDs cada 60 s</text>
+  <text x="350" y="370" class="small">Conversión SAE J1979</text>
+  <text x="350" y="390" class="small">Inserción atómica</text>
+
+  <rect x="330" y="452" width="210" height="106" rx="14" class="box2"/>
+  <text x="350" y="480" class="lbl">simulate_can.py</text>
+  <text x="350" y="502" class="small">ECU simulada · 300 s</text>
+  <text x="350" y="522" class="small">6 anomalías · 4 frames</text>
+  <text x="350" y="542" class="small">source = can_sim</text>
+
+  <!-- DB -->
+  <rect x="596" y="228" width="200" height="150" rx="16" fill="url(#dbGrad)" stroke="#22d3ee" stroke-width="2" filter="url(#glow)"/>
+  <text x="618" y="262" fill="#ecfeff" font-family="system-ui,sans-serif" font-size="14" font-weight="700">SQLite · WAL</text>
+  <text x="618" y="288" fill="#cffafe" font-family="system-ui,sans-serif" font-size="12">vehicle_samples</text>
+  <text x="618" y="310" fill="#a5f3fc" font-family="system-ui,sans-serif" font-size="11">25 métricas + DTC</text>
+  <text x="618" y="330" fill="#a5f3fc" font-family="system-ui,sans-serif" font-size="11">idx_vehicle_samples_epoch</text>
+  <text x="618" y="356" fill="#67e8f9" font-family="system-ui,sans-serif" font-size="11">data/vehicle.db</text>
+
+  <!-- Consumers -->
+  <rect x="852" y="126" width="200" height="104" rx="14" class="box"/>
+  <text x="872" y="154" class="lbl">can_query (C)</text>
+  <text x="872" y="176" class="small">25 métricas</text>
+  <text x="872" y="196" class="small">tabla · JSON · CSV</text>
+  <text x="872" y="216" class="small">solo lectura</text>
+
+  <rect x="852" y="258" width="200" height="104" rx="14" class="box"/>
+  <text x="872" y="286" class="lbl">can_alerts.py</text>
+  <text x="872" y="308" class="small">6 reglas · cada 3 min</text>
+  <text x="872" y="328" class="small">estado persistente</text>
+  <text x="872" y="348" class="small">desfase inicial 5 min</text>
+
+  <rect x="852" y="390" width="200" height="104" rx="14" class="box"/>
+  <text x="872" y="418" class="lbl">jarvis-can-ask.py</text>
+  <text x="872" y="440" class="small">Ollama qwen2.5:0.5b</text>
+  <text x="872" y="460" class="small">enruta la consulta</text>
+  <text x="872" y="480" class="small">resumen determinista</text>
+
+  <!-- Outputs -->
+  <rect x="596" y="500" width="200" height="112" rx="14" class="box"/>
+  <text x="618" y="528" class="lbl">Piper TTS</text>
+  <text x="618" y="550" class="small">es_MX-claude-high</text>
+  <text x="618" y="570" class="small">perfil human-lite</text>
+  <text x="618" y="590" class="small">fallback espeak-ng</text>
+
+  <rect x="852" y="540" width="200" height="112" rx="14" class="box"/>
+  <text x="872" y="568" class="lbl">tts-server.py</text>
+  <text x="872" y="590" class="small">panel + API</text>
+  <text x="872" y="610" class="small">:8090 · HTML/JSON/WAV</text>
+  <text x="872" y="630" class="small">monitor_active real</text>
+
+  <rect x="852" y="690" width="200" height="74" rx="12" class="box2"/>
+  <text x="872" y="720" class="lbl">Navegador (LAN)</text>
+  <text x="872" y="742" class="small">feed · audio · tarjetas</text>
+
+
+  <!-- Flows -->
+  <path d="M276 200 L326 200" class="flowdim"/>
+  <text x="292" y="192" class="tiny">CAN</text>
+  <text x="280" y="216" class="tiny">pendiente</text>
+
+  <path d="M436 260 L436 296" class="flow"/>
+  <path d="M436 448 L436 416" class="flow"/>
+
+  <path d="M540 356 C575 356 566 312 592 308" class="flow"/>
+  <text x="544" y="378" class="tiny">INSERT</text>
+
+  <path d="M330 505 C290 505 290 330 326 330" class="flowdim"/>
+  <text x="286" y="432" class="tiny" transform="rotate(-90 286 432)">AF_UNIX</text>
+
+  <path d="M796 286 L848 250" class="flow"/>
+  <text x="800" y="272" class="tiny">SELECT</text>
+  <path d="M796 310 L848 310" class="flow"/>
+  <path d="M796 330 L848 430" class="flow"/>
+
+  <path d="M952 230 L952 254" class="flowdim"/>
+  <text x="960" y="248" class="tiny">JSON</text>
+
+  <path d="M852 362 C780 390 700 438 700 496" class="flow"/>
+  <text x="812" y="388" class="tiny">alerta</text>
+
+  <path d="M796 556 C812 568 826 578 848 590" class="flow"/>
+  <text x="804" y="540" class="tiny">WAV</text>
+
+  <path d="M952 652 L952 686" class="flow"/>
+  <text x="960" y="674" class="tiny">HTTP</text>
+
+  <!-- Legend -->
+  <rect x="56" y="330" width="220" height="120" rx="12" fill="#0a1220" stroke="#1e293b"/>
+  <text x="74" y="356" class="cyan">LEYENDA</text>
+  <line x1="74" y1="378" x2="118" y2="378" stroke="#7dd3fc" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <text x="128" y="382" class="small">flujo de datos</text>
+  <line x1="74" y1="402" x2="118" y2="402" stroke="#64748b" stroke-width="1.5" stroke-dasharray="6 5" marker-end="url(#arrowDim)"/>
+  <text x="128" y="406" class="small">opcional / pendiente</text>
+  <text x="74" y="430" class="tiny">Sin backend ni telemetría</text>
+  <text x="74" y="446" class="tiny">CLI: can_query · ask-can</text>
+</svg>

@@ -1,0 +1,22 @@
+[Unit]
+Description=JarvisCAN simulador OBD-II (datos CAN ficticios)
+Documentation=file:///home/arduino/JarvisCAN/docs/INSTALL.md
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=arduino
+Group=arduino
+WorkingDirectory=/home/arduino/JarvisCAN
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/bin/bash /home/arduino/JarvisCAN/scripts/run-service-sim.sh
+ExecStopPost=/bin/rm -f /home/arduino/JarvisCAN/data/can_simulator.pid /home/arduino/JarvisCAN/data/can_simulator.sock /tmp/jarvis-can-sim.sock
+Restart=always
+RestartSec=10
+TimeoutStopSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

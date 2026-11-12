@@ -1,0 +1,22 @@
+[Unit]
+Description=JarvisCAN monitores de alertas por voz
+Documentation=file:///home/arduino/JarvisCAN/docs/ALERTS.md
+After=network.target sound.target jarvis-can-sim.service
+Wants=network.target jarvis-can-sim.service
+
+[Service]
+Type=simple
+User=arduino
+Group=arduino
+WorkingDirectory=/home/arduino/JarvisCAN
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/bin/bash /home/arduino/JarvisCAN/scripts/run-service-alerts.sh
+ExecStopPost=/bin/rm -f /home/arduino/JarvisCAN/data/can_alerts.pid
+Restart=always
+RestartSec=10
+TimeoutStopSec=15
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
