@@ -258,7 +258,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.08);pa
   .section{padding:72px 0}
 }
 </style>
-</head>
+<link rel="stylesheet" href="assets/community.css?v=5"></head>
 <body style="--accent:#FFB020;--accent2:#4D7CFE">
 <div class="grid-overlay"></div>
 <div class="glow one"></div>
@@ -275,6 +275,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.08);pa
       <a href="#como">Cómo funciona</a>
       <a href="#arquitectura">Arquitectura</a>
       <a href="#docs">Documentación</a>
+      <a href="#comunidad">Comunidad</a>
       <a class="btn btn-ghost" style="padding:9px 15px" href="https://github.com/wanderc137/JarvisCAN" target="_blank" rel="noopener">GitHub</a>
     </nav>
   </div>
@@ -393,8 +394,8 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.08);pa
   <div class="wrap">
     <div class="cta-card reveal">
       <div class="kicker" style="justify-content:center">Portfolio · Arduino UNO Q</div>
-      <h2>¿Construimos algo así?</h2>
-      <p>Si te interesa telemetría vehicular, diagnóstico OBD-II o llevar datos del auto a un panel propio, este proyecto demuestra el camino completo. También sirve como base para flotas o mantenimiento predictivo.</p>
+      <h2>¿Te animás?</h2>
+      <p>Usá esto como base y referencia para leer un bus CAN, guardar telemetría y construir un asistente de voz para el auto. Este proyecto es la prueba de que se puede hacer con componentes reales.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="https://github.com/wanderc137" target="_blank" rel="noopener">Ver más proyectos <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         <a class="btn btn-ghost" href="https://github.com/wanderc137/JarvisCAN" target="_blank" rel="noopener">Explorar el código</a>
@@ -446,5 +447,8 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.08);pa
   document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
 })();
 </script>
+
+<script>window.PORTFOLIO_COMMUNITY = {"account": "wanderc137", "repo": "JarvisCAN", "coinNamespace": "wanderc137-jarviscan-coins-v1", "faqs": [{"q": "¿Necesito un auto con CAN real?", "a": "No. El proyecto incluye un <b>simulador OBD-II</b> porque no había transceptor CAN ni interfaz <code>can0</code>. El CAN real se documenta como pendiente."}, {"q": "¿Qué hace exactamente?", "a": "Lee PIDs OBD-II, guarda telemetría en SQLite, evalúa reglas, genera alertas, las convierte a voz con Piper y las muestra en un panel web en el puerto <b>8090</b>."}, {"q": "¿Usa IA en la nube?", "a": "No. Las alertas y consultas en lenguaje natural usan Ollama/Qwen local; la voz usa Piper local."}, {"q": "¿Cómo se arranca?", "a": "Hay tres servicios systemd: <code>jarvis-can-sim</code>, <code>jarvis-can-alerts</code> y <code>jarvis-can-tts</code>; también hay scripts manuales."}, {"q": "¿Cuáles son los límites?", "a": "Sin CAN real, sin transceptor y sin validación en un vehículo; el simulador cubre 19 PIDs y 6 reglas."}]};</script>
+<script src="assets/community.js?v=5" defer></script>
 </body>
 </html>
