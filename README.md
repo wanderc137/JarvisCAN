@@ -652,6 +652,57 @@ JarvisCAN/
 
 ---
 
+## Ficha de evaluación
+
+**Madurez global: 3.7/5**
+
+| Criterio | Nota | Evidencia |
+|---|---:|---|
+| Madurez | 3/5 | Pipeline completo probado con simulador y base de 436 muestras, pero el CAN real sigue sin transceptor y el conjunto no se validó en un vehículo. |
+| Reproducibilidad | 3/5 | build.sh y tres servicios systemd documentados; el repo es privado, los binarios y modelos de voz no están versionados y hay pasos manuales de red. |
+| Documentación | 5/5 | README, datasheet, developer, ALERTS, HARDWARE, INSTALL y bitácora, con mediciones de Piper y del tamaño de la base. |
+| Honestidad de límites | 5/5 | Lista 13 limitaciones, entre ellas que toda la telemetría es simulada, que no hay NTP y que el panel no tiene autenticación. |
+| Valor demostrativo | 4/5 | Integra C, SQLite WAL, reglas, TTS local y panel; la consulta completa en frío tarda 45,65 s y genera 7,66 s de audio. |
+| Facilidad de despliegue | 2/5 | Requiere build-essential, SQLite, Ollama, Piper ARM64 y tres servicios con Restart=always; no hay instalación de una línea. |
+
+Sirve a quien quiera una arquitectura completa de telemetría y alertas locales como base para un proyecto OBD-II real. La limitación que más pesa es que nunca se conectó a un bus CAN, por lo que la adquisición y el timing real siguen sin verificar.
+
+## Lo que no funcionó
+
+### v1 · adquisición CAN — Sin can0 ni transceptor en la placa
+
+Linux no expone ninguna interfaz CAN y el kernel no trae vcan; los pines FDCAN del STM32 son lógica de 3,3 V, no CANH/CANL. Se construyó un simulador con 19 PIDs y seis anomalías para validar el resto del pipeline, y el CAN real quedó pendiente de un adaptador USB-CAN o de un transceptor con firmware.
+
+### v1 · audio — Altavoz y micrófono internos inservibles
+
+El altavoz ArduinoImolaHPH devolvía errores de E/S y silencio, los AirPods funcionaban por A2DP pero su micrófono HFP no entregaba audio, y el micrófono interno tampoco. Se movió la salida al navegador y la entrada a IP Webcam a 16 kHz, dejando el altavoz solo como salida no confiable.
+
+### v1 · TTS — espeak robótico y Piper con latencia alta
+
+espeak-ng era inteligible pero mecánico; Piper es_MX-claude-high mejoró la calidad a 8,76 s de pared para 7,99 s de audio, mientras es_AR-daniela tardaba 37,5 s y se descartó. Se adoptó la variante human-lite y se conservó espeak-ng como fallback.
+
+### v2 · consolidación — Dos versiones y dos bases en paralelo
+
+La v1 y la v2 corrían servidores y bases separadas, lo que duplicaba mantenimiento y dividía las muestras. La v1 se retiró, se migró la base de 436 muestras y quedó una sola JarvisCAN 2.0 con el TTS en el 8090.
+
+## Preguntas típicas
+
+**¿Lee el CAN real del auto?**
+
+No. La placa no expone can0, el kernel no permite vcan y no hay transceptor, así que el logger compila pero no se validó en un bus. Todo lo publicado proviene del simulador de 19 PIDs y cuatro tramas propias.
+
+**¿Qué demuestra entonces?**
+
+El pipeline completo: normalización de PIDs, SQLite en WAL, consultas en C de 25 métricas, seis reglas de alerta con histéresis, TTS local y panel web. También el costo real de cada etapa, incluido el arranque en frío.
+
+**¿Cómo se instala y se ejecuta?**
+
+Se compila con build.sh, se despliega con deploy-unoq.sh y se instalan los servicios jarvis-can-sim, jarvis-can-alerts y jarvis-can-tts. El panel queda en http://IP:8090 y Ollama o Piper son opcionales para el asistente y la voz.
+
+**¿Qué se puede reutilizar?**
+
+El esquema SQLite y su modo WAL, can_query con lista blanca de métricas, el motor de reglas con desfase y repetición, y el resumen determinista en lenguaje natural. También la receta de Piper ARM64 con sus tiempos medidos.
+
 ## Licencia y autor
 
 **MIT** — ver [`LICENSE`](LICENSE). Copyright (c) 2026 **wanderc137**. Repo privado: `wanderc137/JarvisCAN`. Las marcas y productos citados son de sus titulares; este proyecto no está afiliado a sus fabricantes.
