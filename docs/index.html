@@ -291,7 +291,8 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.08);pa
 @media(max-width:760px){.concept-grid,.fail-grid{grid-template-columns:1fr}.concept-side{border-left:0;padding-left:0}}
 
 </style>
-<link href="assets/community.css?v=5" rel="stylesheet"/></head>
+<link href="assets/community.css?v=5" rel="stylesheet"/><link href="rec/player.css?v=1" rel="stylesheet"/>
+</head>
 <body style="--accent:#FFB020;--accent2:#4D7CFE">
 <div class="grid-overlay"></div>
 <div class="glow one"></div>
@@ -306,6 +307,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.08);pa
 <a href="#problema">Visión</a>
 <a href="#como">Cómo funciona</a>
 <a href="#arquitectura">Arquitectura</a>
+<a href="#video">Video</a>
 <a href="#docs">Documentación</a>
 <a href="#comunidad">Comunidad</a>
 <a class="btn btn-ghost" href="https://github.com/wanderc137/JarvisCAN" rel="noopener" style="padding:9px 15px" target="_blank">GitHub</a>
@@ -355,6 +357,45 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.08);pa
 <div class="timeline reveal"><div class="step"><div class="step-num">01</div><div class="step-body"><h3>Muestreo</h3><p>19 PIDs con fórmulas SAE J1979. El logger en C escribe en SQLite; el simulador reproduce el contrato completo.</p></div></div><div class="step"><div class="step-num">02</div><div class="step-body"><h3>Persistencia</h3><p>Unas 920 bytes por fila con raw_json. A una muestra por minuto, ~1,3 MB por día.</p></div></div><div class="step"><div class="step-num">03</div><div class="step-body"><h3>Consulta</h3><p>can_query devuelve tabla, JSON o CSV, con agregaciones avg/min/max/sum/count y códigos de salida claros.</p></div></div><div class="step"><div class="step-num">04</div><div class="step-body"><h3>Reglas</h3><p>Seis alertas con desfase de 5 min y chequeo cada 3 min; estado persistente y WAV archivado.</p></div></div><div class="step"><div class="step-num">05</div><div class="step-body"><h3>Voz</h3><p>Piper es_MX-claude-high con perfil human-lite; espeak-ng como respaldo cuando Piper no está.</p></div></div><div class="step"><div class="step-num">06</div><div class="step-body"><h3>Panel</h3><p>Puerto 8090: feed de alertas con regla, hora, mensaje y reproducción de audio en el navegador.</p></div></div></div>
 </div>
 </section>
+
+<section class="section tight rec-section" id="video" style="--accent:#2E7DFF;--accent2:#14F195">
+<div class="wrap">
+<div class="rec-kicker">REC · VIDEO · 3:13</div>
+<h2 class="rec-h2">JarvisCAN · telemetría del auto, sin nube</h2>
+<p class="rec-lead">Un pipeline local que lee el auto por OBD-II, guarda cada muestra en SQLite y avisa por voz y panel web, sin depender de internet.</p>
+<div class="rec-banner">
+<span class="rec-banner-icon">📋</span>
+<strong>Puedes copiar y pegar los comandos del video desde el video !!!</strong>
+<span>Pausá, seleccioná el texto de la terminal y copiá.</span>
+</div>
+<div class="rec-shell">
+<div class="rec-bar"><i></i><i></i><i></i><span class="rec-title">JarvisCAN · telemetría del auto, sin nube · asciinema</span><span class="rec-rec"><b></b>REC</span></div>
+<div class="rec-screen-wrap">
+<div class="rec-screen" id="rec-screen"></div>
+<div class="rec-poster" id="rec-poster">
+<div class="rec-kicker">ASCIINEMA · 3:13</div>
+<h3>JarvisCAN · telemetría del auto, sin nube</h3>
+<p>Un pipeline local que lee el auto por OBD-II, guarda cada muestra en SQLite y avisa por voz y panel web, sin depender de internet.</p>
+<div class="rec-poster-meta">JarvisCAN · código real</div>
+<button class="rec-btn rec-primary" id="rec-start" type="button">▶ Reproducir</button>
+</div>
+</div>
+<div class="rec-controls">
+<button class="rec-btn rec-primary" id="rec-play" type="button">▶ Reproducir</button>
+<button class="rec-btn" id="rec-restart" type="button">↺ Reiniciar</button>
+<input class="rec-progress" id="rec-range" type="range" min="0" max="1000" value="0" aria-label="Progreso"/>
+<span class="rec-time" id="rec-time">0:00 / 3:13</span>
+<select class="rec-speed" id="rec-speed" aria-label="Velocidad"><option value="1">1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="2">2×</option></select>
+<button class="rec-btn" id="rec-full" type="button" title="Pantalla completa">⛶</button>
+<button class="rec-btn" id="rec-copy" type="button">⧉ Copiar comandos</button>
+<a class="rec-download" href="rec/JarvisCAN.cast" download>descargar .cast</a>
+</div>
+</div>
+<p class="rec-note">Guion basado en el código y la documentación del repo; el CAN físico aún no está conectado y las cifras citadas provienen de la base simulada.</p>
+<div class="rec-chapters"><span class="rec-chip"><b>0:06</b> EL PROBLEMA</span><span class="rec-chip"><b>0:21</b> ARQUITECTURA</span><span class="rec-chip"><b>0:40</b> HARDWARE</span><span class="rec-chip"><b>0:58</b> EL NÚCLEO</span><span class="rec-chip"><b>1:15</b> EL NÚCLEO</span><span class="rec-chip"><b>1:30</b> CONSULTAS</span><span class="rec-chip"><b>1:44</b> CONSULTAS</span><span class="rec-chip"><b>2:01</b> ALERTAS</span><span class="rec-chip"><b>2:17</b> VOZ</span><span class="rec-chip"><b>2:34</b> PANEL</span><span class="rec-chip"><b>2:50</b> CÓMO EJECUTARLO</span></div>
+</div>
+</section>
+
 <section class="section tight" id="arquitectura">
 <div class="wrap">
 <div class="section-head reveal">
@@ -469,5 +510,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.08);pa
 </script>
 <script>window.PORTFOLIO_COMMUNITY = {"account": "wanderc137", "repo": "JarvisCAN", "coinNamespace": "wanderc137-jarviscan-coins-v1", "faqs": [{"q": "¿Necesito un auto con CAN real?", "a": "No. El proyecto incluye un <b>simulador OBD-II</b> porque no había transceptor CAN ni interfaz <code>can0</code>. El CAN real se documenta como pendiente."}, {"q": "¿Qué hace exactamente?", "a": "Lee PIDs OBD-II, guarda telemetría en SQLite, evalúa reglas, genera alertas, las convierte a voz con Piper y las muestra en un panel web en el puerto <b>8090</b>."}, {"q": "¿Usa IA en la nube?", "a": "No. Las alertas y consultas en lenguaje natural usan Ollama/Qwen local; la voz usa Piper local."}, {"q": "¿Cómo se arranca?", "a": "Hay tres servicios systemd: <code>jarvis-can-sim</code>, <code>jarvis-can-alerts</code> y <code>jarvis-can-tts</code>; también hay scripts manuales."}, {"q": "¿Cuáles son los límites?", "a": "Sin CAN real, sin transceptor y sin validación en un vehículo; el simulador cubre 19 PIDs y 6 reglas."}]};</script>
 <script defer="" src="assets/community.js?v=6"></script>
+<script defer src="rec/JarvisCAN.cast.js?v=1"></script>
+<script defer src="rec/player.js?v=1"></script>
 </body>
 </html>
